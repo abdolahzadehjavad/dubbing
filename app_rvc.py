@@ -152,7 +152,7 @@ def warn_disp(wrn_lang, is_gui):
         gr.Warning(wrn_lang)
 
 
-class dubbingCache:
+class dubbCache:
     def __init__(self):
         self.cache = {
             'media': [[]],
@@ -268,17 +268,17 @@ def check_openai_api_key():
         )
 
 
-class dubbing(dubbingCache):
+class dubbing(dubbCache):
     def __init__(self, cpu_mode=False):
         super().__init__()
         if cpu_mode:
-            os.environ["dubb_DEVICE"] = "cpu"
+            os.environ["dubbingTR_DEVICE"] = "cpu"
         else:
-            os.environ["dubb_DEVICE"] = (
+            os.environ["dubbingTR_DEVICE"] = (
                 "cuda" if torch.cuda.is_available() else "cpu"
             )
 
-        self.device = os.environ.get("dubb_DEVICE")
+        self.device = os.environ.get("dubbingTR_DEVICE")
         self.result_diarize = None
         self.align_language = None
         self.result_source_lang = None
@@ -1434,7 +1434,7 @@ class dubbing(dubbingCache):
         return output
 
 
-title = "<center><strong><font size='7'>Dubbing</font></strong></center>"
+title = "<center><strong><font size='7'>📽️ dubbingTranslate 🈷️</font></strong></center>"
 
 
 def create_gui(theme, logs_in_gui=False):
@@ -1538,84 +1538,84 @@ def create_gui(theme, logs_in_gui=False):
                         return [value for value in visibility_dict.values()]
 
                     tts_voice00 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-EmmaMultilingualNeural-Female",
                         label=lg_conf["sk1"],
                         visible=True,
                         interactive=True,
                     )
                     tts_voice01 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-AndrewMultilingualNeural-Male",
                         label=lg_conf["sk2"],
                         visible=True,
                         interactive=True,
                     )
                     tts_voice02 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-AvaMultilingualNeural-Female",
                         label=lg_conf["sk3"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice03 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-BrianMultilingualNeural-Male",
                         label=lg_conf["sk4"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice04 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="de-DE-SeraphinaMultilingualNeural-Female",
                         label=lg_conf["sk4"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice05 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="de-DE-FlorianMultilingualNeural-Male",
                         label=lg_conf["sk6"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice06 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="fr-FR-VivienneMultilingualNeural-Female",
                         label=lg_conf["sk7"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice07 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="fr-FR-RemyMultilingualNeural-Male",
                         label=lg_conf["sk8"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice08 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-EmmaMultilingualNeural-Female",
                         label=lg_conf["sk9"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice09 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-AndrewMultilingualNeural-Male",
                         label=lg_conf["sk10"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice10 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-EmmaMultilingualNeural-Female",
                         label=lg_conf["sk11"],
                         visible=False,
                         interactive=True,
                     )
                     tts_voice11 = gr.Dropdown(
-                        dubb.tts_info.tts_list(),
+                        dubbingTr.tts_info.tts_list(),
                         value="en-US-AndrewMultilingualNeural-Male",
                         label=lg_conf["sk12"],
                         visible=False,
@@ -1654,7 +1654,7 @@ def create_gui(theme, logs_in_gui=False):
                             openvoice_models = ["openvoice", "openvoice_v2"]
                             voice_imitation_method_options = (
                                 ["freevc"] + openvoice_models
-                                if dubb.tts_info.xtts_enabled
+                                if dubbingTr.tts_info.xtts_enabled
                                 else openvoice_models
                             )
                             voice_imitation_method_gui = gr.Dropdown(
@@ -1684,7 +1684,7 @@ def create_gui(theme, logs_in_gui=False):
                                 info=lg_conf["vc_remove_info"],
                             )
 
-                    if dubb.tts_info.xtts_enabled:
+                    if dubbingTr.tts_info.xtts_enabled:
                         with gr.Column():
                             with gr.Accordion(
                                 lg_conf["xtts_title"],
@@ -1844,7 +1844,7 @@ def create_gui(theme, logs_in_gui=False):
                             )
                             whisper_model_default = (
                                 "large-v3"
-                                if dubb.device == "cuda"
+                                if dubbingTr.device == "cuda"
                                 else "medium"
                             )
 
@@ -1857,7 +1857,7 @@ def create_gui(theme, logs_in_gui=False):
                             )
                             com_t_opt, com_t_default = (
                                 [COMPUTE_TYPE_GPU, "float16"]
-                                if dubb.device == "cuda"
+                                if dubbingTr.device == "cuda"
                                 else [COMPUTE_TYPE_CPU, "float32"]
                             )
                             compute_type = gr.Dropdown(
@@ -2031,7 +2031,7 @@ def create_gui(theme, logs_in_gui=False):
                                 "en-AU-WilliamNeural-Male",
                             ],
                         ],  # no update
-                        fn=dubb.batch_multilingual_media_conversion,
+                        fn=dubbingTr.batch_multilingual_media_conversion,
                         inputs=[
                             video_input,
                             blink_input,
@@ -2121,7 +2121,7 @@ def create_gui(theme, logs_in_gui=False):
                                 list(
                                     filter(
                                         lambda x: x != "_XTTS_/AUTOMATIC.wav",
-                                        dubb.tts_info.tts_list(),
+                                        dubbingTr.tts_info.tts_list(),
                                     )
                                 ),
                                 value="en-US-EmmaMultilingualNeural-Female",
@@ -2413,7 +2413,7 @@ def create_gui(theme, logs_in_gui=False):
                                             confirm_conf = gr.HTML()
 
                                         button_config.click(
-                                            dubb.vci.apply_conf,
+                                            dubbingTr.vci.apply_conf,
                                             inputs=[
                                                 tag_gui,
                                                 model_gui,
@@ -2446,7 +2446,7 @@ def create_gui(theme, logs_in_gui=False):
                             )
                             with gr.Column():
                                 tts_test = gr.Dropdown(
-                                    sorted(dubb.tts_info.list_edge),
+                                    sorted(dubbingTr.tts_info.list_edge),
                                     value="en-GB-ThomasNeural-Male",
                                     label="TTS",
                                     visible=True,
@@ -2465,7 +2465,7 @@ def create_gui(theme, logs_in_gui=False):
                                 ttsvoice = gr.Audio()
 
                             button_test.click(
-                                dubb.vci.make_test,
+                                dubbingTr.vci.make_test,
                                 inputs=[
                                     text_test,
                                     tts_test,
@@ -2549,18 +2549,18 @@ def create_gui(theme, logs_in_gui=False):
                 logs = gr.Textbox(label=">>>")
                 app.load(read_logs, None, logs, every=1)
 
-        if dubb.tts_info.xtts_enabled:
+        if dubbingTr.tts_info.xtts_enabled:
             # Update tts list
             def update_tts_list():
                 update_dict = {
-                    f"tts_voice{i:02d}": gr.update(choices=dubb.tts_info.tts_list())
+                    f"tts_voice{i:02d}": gr.update(choices=dubbingTr.tts_info.tts_list())
                     for i in range(MAX_TTS)
                 }
                 update_dict["tts_documents"] = gr.update(
                     choices=list(
                         filter(
                             lambda x: x != "_XTTS_/AUTOMATIC.wav",
-                            dubb.tts_info.tts_list(),
+                            dubbingTr.tts_info.tts_list(),
                         )
                     )
                 )
@@ -2599,7 +2599,7 @@ def create_gui(theme, logs_in_gui=False):
 
         # Run translate text
         subs_button.click(
-            dubb.batch_multilingual_media_conversion,
+            dubbingTr.batch_multilingual_media_conversion,
             inputs=[
                 video_input,
                 blink_input,
@@ -2666,7 +2666,7 @@ def create_gui(theme, logs_in_gui=False):
 
         # Run translate tts and complete
         video_button.click(
-            dubb.batch_multilingual_media_conversion,
+            dubbingTr.batch_multilingual_media_conversion,
             inputs=[
                 video_input,
                 blink_input,
@@ -2734,7 +2734,7 @@ def create_gui(theme, logs_in_gui=False):
 
         # Run docs process
         docs_button.click(
-            dubb.multilingual_docs_conversion,
+            dubbingTr.multilingual_docs_conversion,
             inputs=[
                 text_docs,
                 input_docs,
@@ -2847,7 +2847,7 @@ if __name__ == "__main__":
 
     models_path, index_path = upload_model_list()
 
-    dubb = dubbing(cpu_mode=args.cpu_mode)
+    dubbingTr = dubbing(cpu_mode=args.cpu_mode)
 
     lg_conf = get_language_config(language_data, language=args.language)
 
